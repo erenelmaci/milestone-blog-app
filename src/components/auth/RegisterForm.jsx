@@ -166,7 +166,7 @@ const RegisterForm = ({
         />
         <LoadingButton
           type="submit"
-          loading={loading}
+          loading={false}
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
