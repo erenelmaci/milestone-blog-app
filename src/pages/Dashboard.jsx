@@ -3,7 +3,6 @@ import Cards from "../components/blog/Cards"
 import useBlogCalls from "../hooks/useBlogCalls"
 import { useEffect } from "react"
 import { Box, Grid } from "@mui/material"
-import { toastSuccessNotify } from "../helper/ToastNotify"
 
 const Dashboard = () => {
   const { getPostData } = useBlogCalls()
