@@ -36,8 +36,10 @@ const useAuthCalls = () => {
     try {
       await axios.post(`${BASE_URL}users/auth/${url}/`)
       dispatch(logoutSuccess())
+      toastSuccessNotify("login performed")
       navigate("/login")
     } catch (error) {
+      toastErrorNotify("An error occurred while logging in")
       dispatch(fetchFail())
     }
   }
@@ -45,9 +47,11 @@ const useAuthCalls = () => {
     dispatch(fetchStart())
     try {
       const { data } = await axios.post(`${BASE_URL}users/${url}/`, userInfo)
+      toastSuccessNotify("login performed")
       dispatch(registerSuccess(data))
       navigate("/")
     } catch (error) {
+      toastErrorNotify("An error occurred while logging in")
       console.log(error)
     }
   }

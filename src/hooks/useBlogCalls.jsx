@@ -2,6 +2,7 @@ import { fetchFail, fetchStart } from "../features/authSlice"
 import { useDispatch } from "react-redux"
 import useAxios from "./useAxios"
 import { getSuccess } from "../features/blogSlice"
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify"
 
 const useBlogCalls = () => {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const useBlogCalls = () => {
       const { data } = await axiosPublic.get(`api/${url}/`)
       dispatch(getSuccess({ data, url }))
     } catch (error) {
+      toastErrorNotify("Relevant data cannot be accessed")
       dispatch(fetchFail())
     }
   }
@@ -22,6 +24,7 @@ const useBlogCalls = () => {
       const { data } = await axiosWithToken.post(`api/${url}/${id}/`)
       dispatch(getSuccess({ data, url }))
     } catch (error) {
+      toastErrorNotify("Operations failed, check your internet connection")
       dispatch(fetchFail())
     }
   }
@@ -38,7 +41,9 @@ const useBlogCalls = () => {
     dispatch(fetchStart())
     try {
       await axiosWithToken.post(`api/${url}/`, newBlogInfo)
+      toastSuccessNotify("Blog Posted Successfully 👌")
     } catch (error) {
+      toastErrorNotify("Blog post failed please try again 🤨")
       dispatch(fetchFail())
     }
   }
@@ -57,16 +62,20 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosWithToken.post(`api/${url}/${id}/`, comment)
       dispatch(getSuccess({ data, url }))
+      toastSuccessNotify("Your comment has been sent successfully 👌")
     } catch (error) {
+      toastErrorNotify("An error occurred while submitting your comment. 🤨")
       dispatch(fetchFail())
     }
   }
   const deleteBlog = async (url, id) => {
     dispatch(fetchStart())
     try {
-       await axiosWithToken.delete(`api/${url}/${id}/`)
+      await axiosWithToken.delete(`api/${url}/${id}/`)
       getPostData("blogs")
+      toastSuccessNotify("Blog successfully deleted 👌")
     } catch (error) {
+      toastErrorNotify("An error occurred while deleting the blog 🤨")
       dispatch(fetchFail())
     }
   }
@@ -78,7 +87,7 @@ const useBlogCalls = () => {
     getNewBlogCreate,
     getDetailRead,
     getCreateComment,
-    deleteBlog
+    deleteBlog,
   }
 }
 

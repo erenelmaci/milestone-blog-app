@@ -6,6 +6,7 @@ import AppRouter from "./router/AppRouter"
 import { Provider } from "react-redux"
 import store, { persistor } from "./app/store"
 import { PersistGate } from "redux-persist/integration/react"
+import { ToastContainer } from "react-toastify"
 
 function App() {
   const [prefersDarkMode, setPrefersDarkMode] = useState(true)
@@ -30,6 +31,7 @@ function App() {
         />
         <PersistGate loading={null} persistor={persistor}>
           <AppRouter />
+          <ToastContainer />
         </PersistGate>
       </Provider>
     </ThemeProvider>
